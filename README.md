@@ -16,6 +16,7 @@ Suspense is currently available behind an experimental Vite flag:
 qwikVite({
   experimental: ['suspense'],
 });
+```
 
 Docs preview: https://qwikdev-v2-iframe-bp-fix.qwik-8nx.pages.dev/docs/core/suspense/
 
