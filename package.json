@@ -24,8 +24,8 @@
   },
   "devDependencies": {
     "@eslint/js": "latest",
-    "@qwik.dev/core": "^2.0.0-beta.34",
-    "@qwik.dev/router": "^2.0.0-beta.34",
+    "@qwik.dev/core": "https://pkg.pr.new/QwikDev/qwik/@qwik.dev/core@404211c",
+    "@qwik.dev/router": "https://pkg.pr.new/QwikDev/qwik/@qwik.dev/router@404211c",
     "@types/node": "24.10.0",
     "eslint": "10.0.2",
     "eslint-plugin-qwik": "^2.0.0-beta.34",

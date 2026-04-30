@@ -1,16 +1,35 @@
 import type { DocumentHead } from "@qwik.dev/router";
-import { component$ } from "@qwik.dev/core";
+
+import {
+  component$,
+  Suspense,
+  useSignal,
+  type JSXOutput,
+} from "@qwik.dev/core";
+
+const AsyncMessage = component$(() => {
+  const content = new Promise<JSXOutput>((resolve) => {
+    setTimeout(() => resolve(<p>Async content resolved.</p>), 1000);
+  });
+
+  return <>{content}</>;
+});
 
 export default component$(() => {
+  const show = useSignal(false);
+
   return (
-    <>
-      <h1>Hi 👋</h1>
-      <div>
-        Can't wait to see what you build with qwik!
-        <br />
-        Happy coding.
-      </div>
-    </>
+    <section>
+      <button onClick$={() => (show.value = !show.value)}>
+        {show.value ? "Hide" : "Show"} content
+      </button>
+
+      {show.value && (
+        <Suspense fallback={<p>Loading content...</p>} delay={150}>
+          <AsyncMessage />
+        </Suspense>
+      )}
+    </section>
   );
 });
 
