@@ -24,7 +24,7 @@ export default defineConfig(({ command, mode }): UserConfig => {
     plugins: [
       qwikRouter(),
       qwikVite({
-        experimental: ["suspense"],
+        experimental: ["suspense", "noSPA"],
         devTools: {
           hmr: false,
         },
