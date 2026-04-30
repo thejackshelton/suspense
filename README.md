@@ -8,6 +8,21 @@
 
 ---
 
+## Suspense Note
+
+Suspense is currently available behind an experimental Vite flag:
+
+```ts
+qwikVite({
+  experimental: ['suspense'],
+});
+
+Docs preview: https://qwikdev-v2-iframe-bp-fix.qwik-8nx.pages.dev/docs/core/suspense/
+
+The design follows Qwik’s async-first model, with additional consideration for Solid v2 beta 9, especially around coordinating Suspense boundary order. Boundary coordination is still an area of active work.
+  
+Suspense is expected to remain experimental for Qwik v2 beta 35.
+
 ## Project Structure
 
 This project is using Qwik with [QwikRouter](https://qwik.dev/docs/). QwikRouter is just an extra set of tools on top of Qwik to make it easier to build a full site, including directory-based routing, layouts, and more.
