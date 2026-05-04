@@ -1,44 +1,37 @@
+import { component$ } from "@qwik.dev/core";
 import type { DocumentHead } from "@qwik.dev/router";
 
-import {
-  component$,
-  Suspense,
-  useSignal,
-  type JSXOutput,
-} from "@qwik.dev/core";
-
-const AsyncMessage = component$(() => {
-  const content = new Promise<JSXOutput>((resolve) => {
-    setTimeout(() => resolve(<p>Async content resolved.</p>), 1000);
-  });
-
-  return <>{content}</>;
-});
+import { AsyncExamplesGrid } from "~/components/examples/async-examples-grid";
 
 export default component$(() => {
-  const show = useSignal(false);
-
   return (
-    <section>
-      <button onClick$={() => (show.value = !show.value)}>
-        {show.value ? "Hide" : "Show"} content
-      </button>
+    <main class="min-h-screen bg-slate-950 px-6 py-10 text-slate-100">
+      <div class="mx-auto flex max-w-5xl flex-col gap-8">
+        <header class="space-y-3">
+          <p class="text-sm font-semibold uppercase tracking-wide text-cyan-300">
+            Qwik v2 async examples
+          </p>
+          <h1 class="text-3xl font-semibold text-white sm:text-5xl">
+            useAsync$ with server$ and Suspense
+          </h1>
+          <p class="max-w-3xl text-base leading-7 text-slate-300">
+            Each example uses a delayed mock server function. There are no route
+            loaders or other loaders involved.
+          </p>
+        </header>
 
-      {show.value && (
-        <Suspense fallback={<p>Loading content...</p>} delay={150}>
-          <AsyncMessage />
-        </Suspense>
-      )}
-    </section>
+        <AsyncExamplesGrid />
+      </div>
+    </main>
   );
 });
 
 export const head: DocumentHead = {
-  title: "Welcome to Qwik",
+  title: "Qwik v2 useAsync$ Suspense Examples",
   meta: [
     {
       name: "description",
-      content: "Qwik site description",
+      content: "Qwik v2 server$, useAsync$, and Suspense examples with mock delays.",
     },
   ],
 };
