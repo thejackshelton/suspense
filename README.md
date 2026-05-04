@@ -6,8 +6,8 @@ has its own route so the code can be read one topic at a time.
 
 Useful links:
 
-- [Qwik Docs](https://qwik.dev/)
-- [Qwik GitHub](https://github.com/QwikDev/qwik)
+- [Qwik v2 Docs](https://qwikdev-v2-iframe-bp-fix.qwik-8nx.pages.dev/docs/core/state/#computed-values)
+- [Qwik GitHub](https://github.com/QwikDev/qwik/tree/build/v2)
 - [Vite](https://vitejs.dev/)
 
 ## Qwik v2 Async APIs
