@@ -65,6 +65,12 @@ The landing page at `/` is the welcome thread. Every other thread lives under
 - `/examples/error-state/` — Inline error state. Throws from the async
   callback when the mock report fails, then renders `.error` beside the
   Suspense fallback behavior.
+- `/examples/stale-while-revalidate/` — Stale-while-revalidate. Keeps the
+  previous `.value` visible while `.loading` is true, then swaps in the
+  fresh value without flashing a Suspense fallback.
+- `/examples/local-search/` — Local-first search with server enrichment.
+  Filters a local product list instantly while `useAsync$` fetches enriched
+  server results in the background.
 
 ## Project Structure
 
@@ -79,12 +85,14 @@ src/
       chat-composer.tsx    # decorative ChatGPT-style input at the bottom
       threads.ts           # thread metadata (title, subtitle, route)
     examples/
-      delayed-search.tsx   # one example component
-      error-state.tsx      # one example component
-      example-shell.tsx    # shared card and delay picker UI
-      loading.tsx          # shared Suspense fallback/loading UI
-      manual-refresh.tsx   # one example component
-      tracked-profile.tsx  # one example component
+      delayed-search.tsx           # one example component
+      error-state.tsx              # one example component
+      example-shell.tsx            # shared card and delay picker UI
+      loading.tsx                  # shared Suspense fallback/loading UI
+      local-search.tsx             # one example component
+      manual-refresh.tsx           # one example component
+      stale-while-revalidate.tsx   # one example component
+      tracked-profile.tsx          # one example component
   mocks/
     async-examples.ts      # mock server$ functions and shared types
   routes/
@@ -95,6 +103,8 @@ src/
       delayed-search/index.tsx
       manual-refresh/index.tsx
       error-state/index.tsx
+      stale-while-revalidate/index.tsx
+      local-search/index.tsx
 ```
 
 The route files stay small and import components. The example components own
