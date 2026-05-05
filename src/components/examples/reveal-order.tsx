@@ -15,7 +15,7 @@ import {
   type RevealItem,
 } from "~/mocks/async-examples";
 
-import { ExampleShell } from "./example-shell";
+import { ExampleShell, QuickScan } from "./example-shell";
 
 /**
  * Longest mock card delay (`C` at 1700ms) plus a small buffer so the button's
@@ -69,6 +69,12 @@ export const RevealOrderExample = component$(() => {
 
   return (
     <ExampleShell>
+      <QuickScan
+        reactPattern="Coordinate when sibling async cards are allowed to reveal."
+        qwikPattern="Reveal wraps Suspense children and controls swap ordering."
+        refreshTrigger="Changing order/collapsed options, then clicking Restart run."
+        pendingUi="Fallback cards release in selected order: parallel, sequential, reverse, or together."
+      />
       <div class="space-y-2">
         <span class="text-xs font-medium uppercase tracking-wide text-slate-400">
           Reveal order

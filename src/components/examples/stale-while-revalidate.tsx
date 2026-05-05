@@ -2,7 +2,7 @@ import { component$, Suspense, useAsync$ } from "@qwik.dev/core";
 
 import { getMockMetric, type Metric } from "~/mocks/async-examples";
 
-import { ExampleShell } from "./example-shell";
+import { ExampleShell, QuickScan } from "./example-shell";
 import { InlineLoader, ListFallback } from "./loading";
 
 export const StaleWhileRevalidateExample = component$(() => {
@@ -14,6 +14,12 @@ export const StaleWhileRevalidateExample = component$(() => {
 
   return (
     <ExampleShell>
+      <QuickScan
+        reactPattern="SWR/React Query stale-while-revalidate on manual refresh."
+        qwikPattern="useAsync$ keeps previous .value while .loading is true."
+        refreshTrigger="Refresh button calls metric.invalidate()."
+        pendingUi="Card stays visible with stale badge; no fallback flash after first load."
+      />
       <div class="flex items-center justify-between gap-3">
         <p class="text-xs uppercase tracking-wide text-slate-400">
           Refresh keeps the previous reading on screen until the new one lands.

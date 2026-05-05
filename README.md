@@ -67,6 +67,18 @@ A few patterns you'll see repeated in the examples:
   reveal-order preferences are built on it, so you only have to learn the
   pattern once.
 
+## How To Scan Each Example Quickly
+
+Each interactive demo starts with a **Quick scan (React -> Qwik)** panel. If
+you are skimming, read those four lines first:
+
+1. React pattern: the familiar mental model.
+2. Qwik shape: the exact API combo used in this demo.
+3. What causes a rerun: tracked signal changes vs manual `invalidate(...)`.
+4. Pending UI behavior: what shows on first load vs refetches.
+
+Then read the route's assistant copy for deeper context.
+
 **On resumability** — Qwik ships zero JS at boot. Functions you wrote with `$`
 are downloaded on demand when their event fires. That's why everything async
 in this repo is `*$` (`component$`, `useAsync$`, `onClick$`, `server$`, etc.):

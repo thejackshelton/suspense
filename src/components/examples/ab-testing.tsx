@@ -20,7 +20,7 @@ import {
   type UserSegment,
 } from "~/mocks/async-examples";
 
-import { ExampleShell } from "./example-shell";
+import { ExampleShell, QuickScan } from "./example-shell";
 import { InlineLoader, LoadingLabel } from "./loading";
 
 const SEGMENTS: { value: UserSegment; label: string }[] = [
@@ -66,6 +66,12 @@ export const ABTestingExample = component$(() => {
 
   return (
     <ExampleShell>
+      <QuickScan
+        reactPattern="Multiple independent async widgets on one page."
+        qwikPattern="One useAsync$ + Suspense boundary per personalization layer."
+        refreshTrigger="Changing the user segment (also persisted in a cookie)."
+        pendingUi="Fast layers resolve first; slow layers keep their own fallbacks."
+      />
       <div class="space-y-1">
         <span class="text-xs font-medium uppercase tracking-wide text-slate-400">
           User segment

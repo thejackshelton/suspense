@@ -28,10 +28,10 @@ export default component$(() => {
       </UserMessage>
 
       <AssistantMessage>
-        <AssistantHeading label="Local-first search with server enrichment" />
+        <AssistantHeading label="Two-lane search: instant local + enriched server" />
         <p>
-          Yes — keep a static product list on the client and filter it
-          synchronously with plain JS. At the same time,{" "}
+          Think of this demo as two data lanes. Lane 1 is instant: a static
+          local list filtered synchronously in the browser. Lane 2 is enriched:{" "}
           <code class="rounded bg-slate-800 px-1.5 py-0.5 text-cyan-200">
             useAsync$
           </code>{" "}
@@ -39,9 +39,9 @@ export default component$(() => {
           <code class="rounded bg-slate-800 px-1.5 py-0.5 text-cyan-200">
             server$
           </code>{" "}
-          function that returns enriched data (live pricing, stock, ratings).
-          The local column updates instantly; the server column shows stale
-          results while loading, then swaps in the fresh data.
+          function for richer fields (live pricing, stock, ratings). Qwik keeps
+          the previous server value during refetch, so the server column never
+          blanks out.
         </p>
 
         <LocalSearchExample />
@@ -52,7 +52,7 @@ export default component$(() => {
       </UserMessage>
 
       <AssistantMessage>
-        <AssistantHeading label="Local vs server data" />
+        <AssistantHeading label="Why they differ (and why that helps UX)" />
         <p>
           The left column is a plain in-memory filter — it uses the static{" "}
           <code class="rounded bg-slate-800 px-1.5 py-0.5 text-cyan-200">
@@ -75,11 +75,12 @@ export default component$(() => {
             rating
           </code>
           , and a live price. While that request is in flight, the previous
-          server results stay visible with a <em>Stale</em> badge — that's{" "}
+          server results stay visible and get re-filtered with your latest query
+          (gray <em>Stale</em> cards) — that's{" "}
           <code class="rounded bg-slate-800 px-1.5 py-0.5 text-cyan-200">
             .loading
           </code>{" "}
-          at work.
+          plus a small client-side refinement step.
         </p>
       </AssistantMessage>
     </ChatThread>

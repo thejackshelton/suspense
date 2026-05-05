@@ -34,11 +34,12 @@ export default component$(() => {
           <code class="rounded bg-slate-800 px-1.5 py-0.5 text-cyan-200">
             searchMockDocs
           </code>{" "}
-          server function. While a new query is in flight,{" "}
+          server function. Suspense handles the first load, then later queries
+          keep showing the previous results while{" "}
           <code class="rounded bg-slate-800 px-1.5 py-0.5 text-cyan-200">
-            &lt;Suspense&gt;
+            .loading
           </code>{" "}
-          renders the skeleton list and the inline loader marks the refetch.
+          drives the inline refetch indicator.
         </p>
 
         <DelayedSearchExample />

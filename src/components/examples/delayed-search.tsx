@@ -2,7 +2,7 @@ import { component$, Suspense, useAsync$, useSignal } from "@qwik.dev/core";
 
 import { searchMockDocs } from "~/mocks/async-examples";
 
-import { DelayPicker, ExampleShell } from "./example-shell";
+import { DelayPicker, ExampleShell, QuickScan } from "./example-shell";
 import { InlineLoader, ListFallback } from "./loading";
 
 export const DelayedSearchExample = component$(() => {
@@ -18,6 +18,12 @@ export const DelayedSearchExample = component$(() => {
 
   return (
     <ExampleShell>
+      <QuickScan
+        reactPattern="Controlled input + async search effect as the query changes."
+        qwikPattern="bind:value plus useAsync$ tracking query and delay signals."
+        refreshTrigger="Typing in the input or changing the delay slider."
+        pendingUi="First load shows Suspense fallback; later searches show stale list + inline loader."
+      />
       <label class="block space-y-2">
         <span class="text-xs font-medium uppercase tracking-wide text-slate-400">
           Search docs

@@ -2,7 +2,7 @@ import { component$, Suspense, useAsync$, useSignal } from "@qwik.dev/core";
 
 import { checkMockInventory, type Inventory } from "~/mocks/async-examples";
 
-import { ExampleShell } from "./example-shell";
+import { ExampleShell, QuickScan } from "./example-shell";
 import { InlineLoader, ListFallback } from "./loading";
 
 export const ManualRefreshExample = component$(() => {
@@ -16,6 +16,12 @@ export const ManualRefreshExample = component$(() => {
 
   return (
     <ExampleShell>
+      <QuickScan
+        reactPattern="Click-to-refetch flow (similar to queryClient.invalidateQueries)."
+        qwikPattern="useAsync$ reruns through invalidate(item), read as ctx.info."
+        refreshTrigger="Clicking an item button (manual only, no tracked signals)."
+        pendingUi="Existing inventory stays visible while loading flag marks refresh."
+      />
       <div class="flex flex-wrap gap-2">
         {["Qwik mug", "Sticker pack", "Beta badge"].map((item) => (
           <button

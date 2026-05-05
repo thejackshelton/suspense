@@ -2,7 +2,7 @@ import { component$, Suspense, useAsync$, useSignal } from "@qwik.dev/core";
 
 import { getUnstableMockReport } from "~/mocks/async-examples";
 
-import { ExampleShell } from "./example-shell";
+import { ExampleShell, QuickScan } from "./example-shell";
 import { InlineLoader, ListFallback } from "./loading";
 
 export const ErrorStateExample = component$(() => {
@@ -21,6 +21,12 @@ export const ErrorStateExample = component$(() => {
 
   return (
     <ExampleShell>
+      <QuickScan
+        reactPattern="Async fetch that can reject, with inline success/error states."
+        qwikPattern="Throw inside useAsync$ callback and read report.error in JSX."
+        refreshTrigger="Toggling the success/failure button."
+        pendingUi="Suspense covers initial pending run; later failures render inline."
+      />
       <button
         class="w-fit cursor-pointer rounded-md border border-rose-400 bg-rose-400 px-3 py-2 text-sm font-semibold text-slate-950 transition hover:bg-rose-300"
         onClick$={() => (shouldFail.value = !shouldFail.value)}

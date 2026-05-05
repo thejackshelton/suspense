@@ -5,7 +5,7 @@ import { component$, Suspense, useAsync$, useSignal } from "@qwik.dev/core";
 
 import { getMockProfile, type Profile } from "~/mocks/async-examples";
 
-import { DelayPicker, ExampleShell } from "./example-shell";
+import { DelayPicker, ExampleShell, QuickScan } from "./example-shell";
 import { InlineLoader, LoadingLabel } from "./loading";
 
 // `component$` defines a Qwik component. The `$` is a lazy-load boundary —
@@ -36,6 +36,12 @@ export const TrackedProfileExample = component$(() => {
 
   return (
     <ExampleShell>
+      <QuickScan
+        reactPattern="useEffect([name, delay]) + setState for async profile data."
+        qwikPattern="useAsync$ tracks signals and calls a server$ function."
+        refreshTrigger="Changing the selected person or delay slider."
+        pendingUi="First load uses Suspense fallback; refetch keeps stale value with inline loader."
+      />
       <div class="flex flex-wrap gap-2">
         {["Ada", "Linus", "Grace"].map((person) => (
           <button

@@ -13,6 +13,47 @@ export const ExampleShell = component$(() => {
   );
 });
 
+type QuickScanProps = {
+  reactPattern: string;
+  qwikPattern: string;
+  refreshTrigger: string;
+  pendingUi: string;
+};
+
+/**
+ * Compact orientation panel shown at the top of each demo.
+ * It gives React-first readers a fast "what am I looking at?" map.
+ */
+export const QuickScan = component$<QuickScanProps>(
+  ({ reactPattern, qwikPattern, refreshTrigger, pendingUi }) => {
+    return (
+      <aside class="space-y-2 rounded-md border border-slate-700 bg-slate-900/70 p-3">
+        <p class="text-[11px] font-semibold uppercase tracking-wide text-cyan-200">
+          Quick scan (React -&gt; Qwik)
+        </p>
+        <dl class="grid gap-2 text-xs leading-5">
+          <div>
+            <dt class="text-slate-400">React pattern</dt>
+            <dd class="text-slate-200">{reactPattern}</dd>
+          </div>
+          <div>
+            <dt class="text-slate-400">Qwik shape</dt>
+            <dd class="text-slate-200">{qwikPattern}</dd>
+          </div>
+          <div>
+            <dt class="text-slate-400">What causes a rerun</dt>
+            <dd class="text-slate-200">{refreshTrigger}</dd>
+          </div>
+          <div>
+            <dt class="text-slate-400">Pending UI behavior</dt>
+            <dd class="text-slate-200">{pendingUi}</dd>
+          </div>
+        </dl>
+      </aside>
+    );
+  },
+);
+
 type DelayPickerProps = {
   delayMs: Signal<number>;
 };

@@ -40,7 +40,7 @@ export default component$(() => {
           pending UI is easy to see — no route loaders involved.
         </p>
         <p class="text-slate-300">
-          Pick a thread on the left, or start with one of the four demos below.
+          Pick a thread on the left, or start with any demo below.
         </p>
 
         <ul class="grid gap-3 sm:grid-cols-2">

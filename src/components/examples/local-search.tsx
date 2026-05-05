@@ -8,7 +8,7 @@ import {
   type LocalProduct,
 } from "~/mocks/async-examples";
 
-import { DelayPicker, ExampleShell } from "./example-shell";
+import { DelayPicker, ExampleShell, QuickScan } from "./example-shell";
 import { InlineLoader, ListFallback } from "./loading";
 
 export const LocalSearchExample = component$(() => {
@@ -36,6 +36,12 @@ export const LocalSearchExample = component$(() => {
 
   return (
     <ExampleShell>
+      <QuickScan
+        reactPattern="Client-side filtering for instant feedback + background refetch for richer data."
+        qwikPattern="The same filterProducts() helper runs in the browser and inside server$."
+        refreshTrigger="Typing the query or changing the delay slider."
+        pendingUi="During refetch, previous server results stay visible and are re-filtered with the latest query."
+      />
       <label class="block space-y-2">
         <span class="text-xs font-medium uppercase tracking-wide text-slate-400">
           Search products
@@ -52,8 +58,9 @@ export const LocalSearchExample = component$(() => {
       <p class="rounded border border-slate-700 bg-slate-900/50 px-3 py-2 text-xs text-slate-400">
         <code class="text-cyan-300">filterProducts()</code> is the same pure JS
         helper used on the server (inside <code>server$</code>) and in the
-        browser (for instant local + stale filtering). Gray cards = client-side
-        filtered from stale server data.
+        browser. While the server request is loading, we apply that same helper
+        to the previous server value so the list keeps matching your latest
+        query. Gray cards = stale server data being re-filtered on the client.
       </p>
 
       <div class="grid gap-4 md:grid-cols-2">

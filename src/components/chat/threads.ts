@@ -27,7 +27,7 @@ export const EXAMPLE_THREADS: ChatThreadMeta[] = [
     slug: "tracked-profile",
     title: "Look up Ada's profile",
     subtitle:
-      "Tracked useAsync$ — reruns the server$ call when the name or delay signal changes.",
+      "Like useEffect deps: changing name or delay reruns the profile request.",
     timestamp: "9:14 AM",
     group: "Today",
     href: "/examples/tracked-profile/",
@@ -36,7 +36,7 @@ export const EXAMPLE_THREADS: ChatThreadMeta[] = [
     slug: "delayed-search",
     title: "Search the docs for me",
     subtitle:
-      "Bind an input to a signal, and let useAsync$ derive search results from it.",
+      "Like a controlled input with async search tied to query state.",
     timestamp: "8:52 AM",
     group: "Today",
     href: "/examples/delayed-search/",
@@ -45,7 +45,7 @@ export const EXAMPLE_THREADS: ChatThreadMeta[] = [
     slug: "manual-refresh",
     title: "Check inventory on demand",
     subtitle:
-      "invalidate(item) reruns useAsync$ with that item exposed as info — no tracked signals.",
+      "Qwik twist on manual refetch: invalidate(item) reruns useAsync$ and passes item to ctx.info.",
     timestamp: "Yesterday",
     group: "Yesterday",
     href: "/examples/manual-refresh/",
@@ -54,7 +54,7 @@ export const EXAMPLE_THREADS: ChatThreadMeta[] = [
     slug: "error-state",
     title: "Generate a status report",
     subtitle:
-      "Suspense covers pending UI while the async signal exposes thrown errors inline.",
+      "Suspense handles pending UI; failed requests render inline errors.",
     timestamp: "Mon",
     group: "Last 7 days",
     href: "/examples/error-state/",
@@ -63,7 +63,7 @@ export const EXAMPLE_THREADS: ChatThreadMeta[] = [
     slug: "stale-while-revalidate",
     title: "Refresh without flashing a fallback",
     subtitle:
-      "Keep the previous .value visible while .loading is true, then swap in the new value.",
+      "Keep stale data visible while fresh data loads in the background.",
     timestamp: "Sun",
     group: "Last 7 days",
     href: "/examples/stale-while-revalidate/",
@@ -72,7 +72,7 @@ export const EXAMPLE_THREADS: ChatThreadMeta[] = [
     slug: "local-search",
     title: "Search local and server data",
     subtitle:
-      "Filter a local product list instantly while useAsync$ fetches enriched server results.",
+      "Qwik twist: instant local filtering plus stale server results kept visible during refetch.",
     timestamp: "Sat",
     group: "Last 7 days",
     href: "/examples/local-search/",
@@ -81,7 +81,7 @@ export const EXAMPLE_THREADS: ChatThreadMeta[] = [
     slug: "ab-testing",
     title: "Personalize with A/B tests",
     subtitle:
-      "Multiple independent Suspense boundaries let each experiment resolve at its own pace — no waterfall.",
+      "Each async section resolves independently, so slow tests do not block fast ones.",
     timestamp: "Fri",
     group: "Last 7 days",
     href: "/examples/ab-testing/",
@@ -90,7 +90,7 @@ export const EXAMPLE_THREADS: ChatThreadMeta[] = [
     slug: "reveal-order",
     title: "Order how cards stream in",
     subtitle:
-      "Wrap sibling Suspense boundaries in <Reveal> to coordinate parallel, sequential, reverse, or together reveal order.",
+      "Choose card reveal order: parallel, sequential, reverse, or together.",
     timestamp: "Thu",
     group: "Last 7 days",
     href: "/examples/reveal-order/",

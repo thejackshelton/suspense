@@ -39,11 +39,12 @@ export default component$(() => {
           <code class="rounded bg-slate-800 px-1.5 py-0.5 text-cyan-200">
             getMockProfile
           </code>{" "}
-          server function. While the new value is pending,{" "}
+          server function. On the first load,{" "}
           <code class="rounded bg-slate-800 px-1.5 py-0.5 text-cyan-200">
             &lt;Suspense&gt;
           </code>{" "}
-          shows a fallback.
+          can show a fallback; later refetches keep the previous value visible
+          and rely on the inline loader.
         </p>
 
         <TrackedProfileExample />
