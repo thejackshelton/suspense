@@ -1,0 +1,8 @@
+# Ruler Configuration File
+# See https://ai.intellectronica.net/ruler for documentation.
+
+# Only enable agents we actively use
+default_agents = ["cursor", "claude", "codex", "copilot", "agentsmd"]
+
+[gitignore]
+enabled = true

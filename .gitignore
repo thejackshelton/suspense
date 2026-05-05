@@ -41,3 +41,13 @@ lerna-debug.log*
 # Yarn
 .yarn/*
 !.yarn/releases
+
+# AI agent workspace directories
+.claude/
+.codex/
+.cursor/
+/AGENTS.md
+/AGENTS.md.bak
+/CLAUDE.md
+/CLAUDE.md.bak
+

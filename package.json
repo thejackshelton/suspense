@@ -19,6 +19,7 @@
   "devDependencies": {
     "@qwik.dev/core": "https://pkg.pr.new/QwikDev/qwik/@qwik.dev/core@c79d1d9",
     "@qwik.dev/router": "https://pkg.pr.new/QwikDev/qwik/@qwik.dev/router@c79d1d9",
+    "@intellectronica/ruler": "0.3.40",
     "@tailwindcss/vite": "4.2.4",
     "@types/node": "24.10.0",
     "tailwindcss": "4.2.4",

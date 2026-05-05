@@ -143,3 +143,19 @@ Run the full build:
 ```shell
 pnpm build
 ```
+
+## AI Agent Rules
+
+This repo uses [`@intellectronica/ruler`](https://github.com/intellectronica/ruler)
+to keep AI coding assistant instructions in sync across Cursor, Claude Code,
+OpenAI Codex, GitHub Copilot, and any other supported agent.
+
+All rules live in `.ruler/AGENTS.md`. After editing, run:
+
+```shell
+npx ruler apply
+```
+
+This distributes the rules to each agent's config file (`AGENTS.md`, `CLAUDE.md`,
+`.codex/config.toml`, etc.). The generated files are gitignored — only `.ruler/`
+is committed.
