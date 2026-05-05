@@ -19,10 +19,7 @@ export const ErrorStateExample = component$(() => {
   });
 
   return (
-    <ExampleShell
-      title="Inline error state"
-      description="The Suspense fallback handles pending work; .error gets its own markup after a rejected server$ call."
-    >
+    <ExampleShell>
       <button
         class="w-fit rounded-md border border-rose-400 bg-rose-400 px-3 py-2 text-sm font-semibold text-slate-950 transition hover:bg-rose-300"
         onClick$={() => (shouldFail.value = !shouldFail.value)}

@@ -14,10 +14,7 @@ export const ManualRefreshExample = component$(() => {
   });
 
   return (
-    <ExampleShell
-      title="Refresh on demand"
-      description="The buttons do not change a tracked signal. They manually call invalidate(item), and that item becomes info in the next useAsync$ run."
-    >
+    <ExampleShell>
       <div class="flex flex-wrap gap-2">
         {["Qwik mug", "Sticker pack", "Beta badge"].map((item) => (
           <button

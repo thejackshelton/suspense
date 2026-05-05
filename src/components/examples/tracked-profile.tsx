@@ -16,10 +16,7 @@ export const TrackedProfileExample = component$(() => {
   });
 
   return (
-    <ExampleShell
-      title="Tracked server call"
-      description="track(signal) reruns the async server$ call when the selected person or delay changes."
-    >
+    <ExampleShell>
       <div class="flex flex-wrap gap-2">
         {["Ada", "Linus", "Grace"].map((person) => (
           <button

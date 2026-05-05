@@ -27,7 +27,7 @@ export default component$(() => {
 
         <link rel="canonical" href={url.href} />
       </head>
-      <body>
+      <body class="bg-slate-950 text-slate-100">
         <RouterOutlet />
       </body>
     </>

@@ -1,17 +1,13 @@
 import { component$, Slot, type Signal } from "@qwik.dev/core";
 
-type ExampleShellProps = {
-  title: string;
-  description: string;
-};
-
-export const ExampleShell = component$<ExampleShellProps>((props) => {
+/**
+ * Container for the interactive part of an example. The chat message around
+ * each example provides the title and explanation, so this shell only needs to
+ * group the controls and result.
+ */
+export const ExampleShell = component$(() => {
   return (
-    <section class="flex min-h-96 flex-col gap-5 rounded-lg border border-slate-800 bg-slate-900/70 p-5 shadow-xl shadow-slate-950/40">
-      <div class="space-y-2">
-        <h2 class="text-xl font-semibold text-white">{props.title}</h2>
-        <p class="text-sm leading-6 text-slate-300">{props.description}</p>
-      </div>
+    <section class="flex flex-col gap-5 rounded-xl border border-slate-700/70 bg-slate-950/70 p-4 shadow-inner shadow-slate-950/40">
       <Slot />
     </section>
   );
@@ -24,7 +20,7 @@ type DelayPickerProps = {
 export const DelayPicker = component$<DelayPickerProps>(({ delayMs }) => {
   return (
     <label class="block space-y-2">
-      <span class="text-sm font-medium text-slate-300">
+      <span class="text-xs font-medium uppercase tracking-wide text-slate-400">
         Delay: {delayMs.value}ms
       </span>
       <input

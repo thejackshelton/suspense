@@ -16,12 +16,11 @@ export const DelayedSearchExample = component$(() => {
   });
 
   return (
-    <ExampleShell
-      title="Delayed search"
-      description="bind:value updates the query signal, and useAsync$ derives fresh results from the server."
-    >
+    <ExampleShell>
       <label class="block space-y-2">
-        <span class="text-sm font-medium text-slate-300">Search docs</span>
+        <span class="text-xs font-medium uppercase tracking-wide text-slate-400">
+          Search docs
+        </span>
         <input
           class="w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-slate-100 outline-none ring-cyan-300 transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-2"
           placeholder="Try async, suspense, or server"
