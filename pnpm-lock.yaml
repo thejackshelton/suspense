@@ -12,11 +12,11 @@ importers:
         specifier: 0.3.40
         version: 0.3.40
       '@qwik.dev/core':
-        specifier: https://pkg.pr.new/QwikDev/qwik/@qwik.dev/core@c79d1d9
-        version: https://pkg.pr.new/QwikDev/qwik/@qwik.dev/core@c79d1d9(prettier@3.7.4)(vite@7.3.1(@types/node@24.10.0)(jiti@2.6.1)(less@4.6.4)(lightningcss@1.32.0)(sass@1.99.0)(stylus@0.62.0)(yaml@2.8.3))
+        specifier: https://pkg.pr.new/QwikDev/qwik/@qwik.dev/core@a841dd9
+        version: https://pkg.pr.new/QwikDev/qwik/@qwik.dev/core@a841dd9(prettier@3.7.4)(vite@7.3.1(@types/node@24.10.0)(jiti@2.6.1)(less@4.6.4)(lightningcss@1.32.0)(sass@1.99.0)(stylus@0.62.0)(yaml@2.8.3))
       '@qwik.dev/router':
-        specifier: https://pkg.pr.new/QwikDev/qwik/@qwik.dev/router@c79d1d9
-        version: https://pkg.pr.new/QwikDev/qwik/@qwik.dev/router@c79d1d9(@qwik.dev/core@https://pkg.pr.new/QwikDev/qwik/@qwik.dev/core@c79d1d9(prettier@3.7.4)(vite@7.3.1(@types/node@24.10.0)(jiti@2.6.1)(less@4.6.4)(lightningcss@1.32.0)(sass@1.99.0)(stylus@0.62.0)(yaml@2.8.3)))(rollup@4.60.2)(typescript@5.9.3)(vite@7.3.1(@types/node@24.10.0)(jiti@2.6.1)(less@4.6.4)(lightningcss@1.32.0)(sass@1.99.0)(stylus@0.62.0)(yaml@2.8.3))
+        specifier: https://pkg.pr.new/QwikDev/qwik/@qwik.dev/router@a841dd9
+        version: https://pkg.pr.new/QwikDev/qwik/@qwik.dev/router@a841dd9(@qwik.dev/core@https://pkg.pr.new/QwikDev/qwik/@qwik.dev/core@a841dd9(prettier@3.7.4)(vite@7.3.1(@types/node@24.10.0)(jiti@2.6.1)(less@4.6.4)(lightningcss@1.32.0)(sass@1.99.0)(stylus@0.62.0)(yaml@2.8.3)))(rollup@4.60.2)(typescript@5.9.3)(vite@7.3.1(@types/node@24.10.0)(jiti@2.6.1)(less@4.6.4)(lightningcss@1.32.0)(sass@1.99.0)(stylus@0.62.0)(yaml@2.8.3))
       '@tailwindcss/vite':
         specifier: 4.2.4
         version: 4.2.4(vite@7.3.1(@types/node@24.10.0)(jiti@2.6.1)(less@4.6.4)(lightningcss@1.32.0)(sass@1.99.0)(stylus@0.62.0)(yaml@2.8.3))
@@ -457,8 +457,8 @@ packages:
     resolution: {integrity: sha512-tmmZ3lQxAe/k/+rNnXQRawJ4NjxO2hqiOLTHvWchtGZULp4RyFeh6aU4XdOYBFe2KE1oShQTv4AblOs2iOrNnQ==}
     engines: {node: '>= 10.0.0'}
 
-  '@qwik.dev/core@https://pkg.pr.new/QwikDev/qwik/@qwik.dev/core@c79d1d9':
-    resolution: {integrity: sha512-fW45YSrZxMkBvC9NI5vEO3C//v0Awj8FJUfJfBcv2DVcRXc756iwPEOggAVkmSV7shOuf7S26h/ZJKvDlhLEyg==, tarball: https://pkg.pr.new/QwikDev/qwik/@qwik.dev/core@c79d1d9}
+  '@qwik.dev/core@https://pkg.pr.new/QwikDev/qwik/@qwik.dev/core@a841dd9':
+    resolution: {tarball: https://pkg.pr.new/QwikDev/qwik/@qwik.dev/core@a841dd9}
     version: 2.0.0-beta.34
     engines: {node: ^20.3.0 || >=21.0.0}
     hasBin: true
@@ -472,13 +472,13 @@ packages:
       vitest:
         optional: true
 
-  '@qwik.dev/optimizer@https://pkg.pr.new/QwikDev/qwik/@qwik.dev/optimizer@c79d1d9':
-    resolution: {tarball: https://pkg.pr.new/QwikDev/qwik/@qwik.dev/optimizer@c79d1d9}
+  '@qwik.dev/optimizer@https://pkg.pr.new/QwikDev/qwik/@qwik.dev/optimizer@a841dd9':
+    resolution: {tarball: https://pkg.pr.new/QwikDev/qwik/@qwik.dev/optimizer@a841dd9}
     version: 2.1.0-beta.3
     engines: {node: ^20.3.0 || >=21.0.0}
 
-  '@qwik.dev/router@https://pkg.pr.new/QwikDev/qwik/@qwik.dev/router@c79d1d9':
-    resolution: {integrity: sha512-++vgBrVBMnc6BxvxxrdAE8SSehNQ3kGmafuJcqnlnqzd/Hbd4O6jcaIjx0ZrTD+EqCenRa34ua9E+9cWYZ3DGQ==, tarball: https://pkg.pr.new/QwikDev/qwik/@qwik.dev/router@c79d1d9}
+  '@qwik.dev/router@https://pkg.pr.new/QwikDev/qwik/@qwik.dev/router@a841dd9':
+    resolution: {tarball: https://pkg.pr.new/QwikDev/qwik/@qwik.dev/router@a841dd9}
     version: 2.0.0-beta.34
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     peerDependencies:
@@ -2029,24 +2029,25 @@ snapshots:
       '@parcel/watcher-win32-x64': 2.5.6
     optional: true
 
-  '@qwik.dev/core@https://pkg.pr.new/QwikDev/qwik/@qwik.dev/core@c79d1d9(prettier@3.7.4)(vite@7.3.1(@types/node@24.10.0)(jiti@2.6.1)(less@4.6.4)(lightningcss@1.32.0)(sass@1.99.0)(stylus@0.62.0)(yaml@2.8.3))':
+  '@qwik.dev/core@https://pkg.pr.new/QwikDev/qwik/@qwik.dev/core@a841dd9(prettier@3.7.4)(vite@7.3.1(@types/node@24.10.0)(jiti@2.6.1)(less@4.6.4)(lightningcss@1.32.0)(sass@1.99.0)(stylus@0.62.0)(yaml@2.8.3))':
     dependencies:
-      '@qwik.dev/optimizer': https://pkg.pr.new/QwikDev/qwik/@qwik.dev/optimizer@c79d1d9
+      '@qwik.dev/optimizer': https://pkg.pr.new/QwikDev/qwik/@qwik.dev/optimizer@a841dd9
       csstype: 3.2.3
       launch-editor: 2.13.2
+      magic-string: 0.30.21
       rollup: 4.60.2
       vite: 7.3.1(@types/node@24.10.0)(jiti@2.6.1)(less@4.6.4)(lightningcss@1.32.0)(sass@1.99.0)(stylus@0.62.0)(yaml@2.8.3)
     optionalDependencies:
       prettier: 3.7.4
 
-  '@qwik.dev/optimizer@https://pkg.pr.new/QwikDev/qwik/@qwik.dev/optimizer@c79d1d9': {}
+  '@qwik.dev/optimizer@https://pkg.pr.new/QwikDev/qwik/@qwik.dev/optimizer@a841dd9': {}
 
-  '@qwik.dev/router@https://pkg.pr.new/QwikDev/qwik/@qwik.dev/router@c79d1d9(@qwik.dev/core@https://pkg.pr.new/QwikDev/qwik/@qwik.dev/core@c79d1d9(prettier@3.7.4)(vite@7.3.1(@types/node@24.10.0)(jiti@2.6.1)(less@4.6.4)(lightningcss@1.32.0)(sass@1.99.0)(stylus@0.62.0)(yaml@2.8.3)))(rollup@4.60.2)(typescript@5.9.3)(vite@7.3.1(@types/node@24.10.0)(jiti@2.6.1)(less@4.6.4)(lightningcss@1.32.0)(sass@1.99.0)(stylus@0.62.0)(yaml@2.8.3))':
+  '@qwik.dev/router@https://pkg.pr.new/QwikDev/qwik/@qwik.dev/router@a841dd9(@qwik.dev/core@https://pkg.pr.new/QwikDev/qwik/@qwik.dev/core@a841dd9(prettier@3.7.4)(vite@7.3.1(@types/node@24.10.0)(jiti@2.6.1)(less@4.6.4)(lightningcss@1.32.0)(sass@1.99.0)(stylus@0.62.0)(yaml@2.8.3)))(rollup@4.60.2)(typescript@5.9.3)(vite@7.3.1(@types/node@24.10.0)(jiti@2.6.1)(less@4.6.4)(lightningcss@1.32.0)(sass@1.99.0)(stylus@0.62.0)(yaml@2.8.3))':
     dependencies:
       '@azure/functions': 3.5.1
       '@mdx-js/mdx': 3.1.1
       '@netlify/edge-functions': 3.0.6
-      '@qwik.dev/core': https://pkg.pr.new/QwikDev/qwik/@qwik.dev/core@c79d1d9(prettier@3.7.4)(vite@7.3.1(@types/node@24.10.0)(jiti@2.6.1)(less@4.6.4)(lightningcss@1.32.0)(sass@1.99.0)(stylus@0.62.0)(yaml@2.8.3))
+      '@qwik.dev/core': https://pkg.pr.new/QwikDev/qwik/@qwik.dev/core@a841dd9(prettier@3.7.4)(vite@7.3.1(@types/node@24.10.0)(jiti@2.6.1)(less@4.6.4)(lightningcss@1.32.0)(sass@1.99.0)(stylus@0.62.0)(yaml@2.8.3))
       '@types/mdx': 2.0.13
       estree-util-value-to-estree: 3.5.0
       github-slugger: 2.0.0
