@@ -150,18 +150,27 @@ export const LOCAL_PRODUCTS: LocalProduct[] = [
   { id: 8, name: "Component Pin Set", category: "accessories", price: 9.99 },
 ];
 
+// Shared filter helper — same function runs on server AND browser.
+// This is plain JS with no platform dependencies so it works anywhere.
+export function filterProducts<T extends LocalProduct>(
+  products: T[],
+  query: string,
+): T[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return products;
+  return products.filter(
+    (p) =>
+      p.name.toLowerCase().includes(q) ||
+      p.category.toLowerCase().includes(q),
+  );
+}
+
 export const searchMockProducts = server$(
   async (query: string, delayMs: number) => {
     await new Promise((resolve) => setTimeout(resolve, delayMs));
 
-    const normalizedQuery = query.trim().toLowerCase();
-    const filtered = normalizedQuery
-      ? LOCAL_PRODUCTS.filter(
-          (p) =>
-            p.name.toLowerCase().includes(normalizedQuery) ||
-            p.category.toLowerCase().includes(normalizedQuery),
-        )
-      : LOCAL_PRODUCTS;
+    // Uses the same filterProducts helper that the browser uses locally
+    const filtered = filterProducts(LOCAL_PRODUCTS, query);
 
     return filtered.map((p) => ({
       ...p,

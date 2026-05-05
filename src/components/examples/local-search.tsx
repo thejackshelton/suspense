@@ -1,6 +1,7 @@
 import { component$, Suspense, useAsync$, useSignal } from "@qwik.dev/core";
 
 import {
+  filterProducts,
   LOCAL_PRODUCTS,
   searchMockProducts,
   type EnrichedProduct,
@@ -24,7 +25,14 @@ export const LocalSearchExample = component$(() => {
     },
   );
 
-  const localFiltered = filterLocal(query.value);
+  // Same filterProducts helper used on the browser for instant local results
+  const localFiltered = filterProducts(LOCAL_PRODUCTS, query.value);
+
+  // While server is loading, re-filter stale server data client-side
+  // using the exact same filterProducts helper — results show as gray
+  const serverDisplayResults = serverResults.loading
+    ? filterProducts(serverResults.value, query.value)
+    : serverResults.value;
 
   return (
     <ExampleShell>
@@ -41,11 +49,18 @@ export const LocalSearchExample = component$(() => {
 
       <DelayPicker delayMs={delayMs} />
 
+      <p class="rounded border border-slate-700 bg-slate-900/50 px-3 py-2 text-xs text-slate-400">
+        <code class="text-cyan-300">filterProducts()</code> is the same pure JS
+        helper used on the server (inside <code>server$</code>) and in the
+        browser (for instant local + stale filtering). Gray cards = client-side
+        filtered from stale server data.
+      </p>
+
       <div class="grid gap-4 md:grid-cols-2">
         <section class="space-y-3">
           <h3 class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
             <span class="inline-block h-2 w-2 rounded-full bg-amber-300" />
-            Local (instant)
+            Local (instant via filterProducts)
           </h3>
           <ul class="space-y-2">
             {localFiltered.map((p) => (
@@ -63,23 +78,28 @@ export const LocalSearchExample = component$(() => {
           <h3 class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
             <span class="inline-block h-2 w-2 rounded-full bg-emerald-300" />
             Server (enriched)
+            {serverResults.loading && (
+              <span class="text-[10px] text-slate-500">
+                — filtered locally while loading
+              </span>
+            )}
           </h3>
           <Suspense
             fallback={<ListFallback label="Loading server catalog" />}
             delay={120}
           >
             {serverResults.loading && (
-              <InlineLoader label="Fetching live data" />
+              <InlineLoader label="Fetching live data — showing client-filtered stale results" />
             )}
             <ul class="space-y-2">
-              {serverResults.value.map((p) => (
+              {serverDisplayResults.map((p) => (
                 <EnrichedProductCard
                   key={p.id}
                   product={p}
                   stale={serverResults.loading}
                 />
               ))}
-              {serverResults.value.length === 0 && (
+              {serverDisplayResults.length === 0 && (
                 <p class="py-4 text-center text-sm text-slate-500">
                   No server matches
                 </p>
@@ -91,16 +111,6 @@ export const LocalSearchExample = component$(() => {
     </ExampleShell>
   );
 });
-
-function filterLocal(query: string): LocalProduct[] {
-  const q = query.trim().toLowerCase();
-  if (!q) return LOCAL_PRODUCTS;
-  return LOCAL_PRODUCTS.filter(
-    (p) =>
-      p.name.toLowerCase().includes(q) ||
-      p.category.toLowerCase().includes(q),
-  );
-}
 
 const LocalProductCard = component$<{ product: LocalProduct }>(
   ({ product }) => {
@@ -127,19 +137,33 @@ const EnrichedProductCard = component$<EnrichedCardProps>(
     return (
       <li
         class={[
-          "rounded-md border bg-slate-900 px-3 py-2 transition",
-          stale ? "border-amber-300/40 opacity-70" : "border-slate-800",
+          "rounded-md border px-3 py-2 transition",
+          stale
+            ? "border-slate-700 bg-slate-900/60 opacity-60"
+            : "border-slate-800 bg-slate-900",
         ]}
       >
         <div class="flex items-center justify-between">
-          <span class="text-sm font-medium text-white">{product.name}</span>
+          <span
+            class={[
+              "text-sm font-medium",
+              stale ? "text-slate-400" : "text-white",
+            ]}
+          >
+            {product.name}
+          </span>
           <div class="flex items-center gap-2">
             {priceChanged ? (
               <>
                 <span class="text-xs text-slate-500 line-through">
                   ${product.price}
                 </span>
-                <span class="text-xs font-semibold text-emerald-300">
+                <span
+                  class={[
+                    "text-xs font-semibold",
+                    stale ? "text-slate-400" : "text-emerald-300",
+                  ]}
+                >
                   ${product.livePrice}
                 </span>
               </>
@@ -148,18 +172,23 @@ const EnrichedProductCard = component$<EnrichedCardProps>(
             )}
           </div>
         </div>
-        <div class="mt-1 flex items-center gap-3 text-xs text-slate-400">
+        <div
+          class={[
+            "mt-1 flex items-center gap-3 text-xs",
+            stale ? "text-slate-500" : "text-slate-400",
+          ]}
+        >
           <span>{product.stock} in stock</span>
           <span>★ {product.rating}</span>
           <span
             class={[
               "ml-auto rounded px-1.5 py-0.5 text-[10px] font-semibold",
               stale
-                ? "bg-amber-300 text-slate-950"
+                ? "bg-slate-600 text-slate-300"
                 : "bg-emerald-300 text-slate-950",
             ]}
           >
-            {stale ? "Stale" : "Live"}
+            {stale ? "Filtered (stale)" : "Live"}
           </span>
         </div>
       </li>
