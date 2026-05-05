@@ -86,6 +86,15 @@ export const EXAMPLE_THREADS: ChatThreadMeta[] = [
     group: "Last 7 days",
     href: "/examples/ab-testing/",
   },
+  {
+    slug: "reveal-order",
+    title: "Order how cards stream in",
+    subtitle:
+      "Wrap sibling Suspense boundaries in <Reveal> to coordinate parallel, sequential, reverse, or together reveal order.",
+    timestamp: "Thu",
+    group: "Last 7 days",
+    href: "/examples/reveal-order/",
+  },
 ];
 
 export const ALL_THREADS: ChatThreadMeta[] = [HOME_THREAD, ...EXAMPLE_THREADS];

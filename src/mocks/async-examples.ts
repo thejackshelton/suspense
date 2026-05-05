@@ -1,4 +1,4 @@
-import { isBrowser } from "@qwik.dev/core";
+import { isBrowser, type RevealOrder } from "@qwik.dev/core";
 import { server$ } from "@qwik.dev/router";
 
 export type Profile = {
@@ -37,6 +37,30 @@ type ReportResult =
       ok: false;
       message: string;
     };
+
+export type RevealItem = {
+  title: string;
+  delayMs: number;
+  message: string;
+  resolvedAt: string;
+};
+
+export const getMockRevealItem = server$(
+  async (title: string, delayMs: number) => {
+    await new Promise((resolve) => setTimeout(resolve, delayMs));
+
+    return {
+      title,
+      delayMs,
+      message: `${title} resolved in ${delayMs}ms`,
+      resolvedAt: new Date().toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "2-digit",
+        second: "2-digit",
+      }),
+    } satisfies RevealItem;
+  },
+);
 
 export const getMockProfile = server$(async (name: string, delayMs: number) => {
   await new Promise((resolve) => setTimeout(resolve, delayMs));
@@ -263,6 +287,90 @@ export async function setSegmentCookie(segment: UserSegment): Promise<void> {
     return;
   }
   await setSegmentCookieServer(segment);
+}
+
+// ---------------------------------------------------------------------------
+// Reveal example preferences — order + collapsed are persisted in a cookie so
+// refresh replays SSR with the chosen reveal ordering visible from the very
+// first render, including the streaming Suspense fallbacks.
+// ---------------------------------------------------------------------------
+
+export type RevealPrefs = {
+  order: RevealOrder;
+  collapsed: boolean;
+};
+
+const VALID_REVEAL_ORDERS: RevealOrder[] = [
+  "parallel",
+  "sequential",
+  "reverse",
+  "together",
+];
+
+const REVEAL_PREFS_COOKIE = "reveal-prefs";
+const DEFAULT_REVEAL_PREFS: RevealPrefs = {
+  order: "sequential",
+  collapsed: true,
+};
+
+function parseRevealPrefs(raw: string | undefined | null): RevealPrefs {
+  if (!raw) return DEFAULT_REVEAL_PREFS;
+  try {
+    const parsed = JSON.parse(decodeURIComponent(raw)) as Partial<RevealPrefs>;
+    const order = VALID_REVEAL_ORDERS.includes(parsed.order as RevealOrder)
+      ? (parsed.order as RevealOrder)
+      : DEFAULT_REVEAL_PREFS.order;
+    const collapsed =
+      typeof parsed.collapsed === "boolean"
+        ? parsed.collapsed
+        : DEFAULT_REVEAL_PREFS.collapsed;
+    return { order, collapsed };
+  } catch {
+    return DEFAULT_REVEAL_PREFS;
+  }
+}
+
+const getRevealPrefsCookieServer = server$(function (): RevealPrefs {
+  return parseRevealPrefs(this.cookie.get(REVEAL_PREFS_COOKIE)?.value);
+});
+
+const setRevealPrefsCookieServer = server$(function (prefs: RevealPrefs) {
+  this.cookie.set(REVEAL_PREFS_COOKIE, JSON.stringify(prefs), {
+    path: "/",
+    maxAge: COOKIE_MAX_AGE,
+    httpOnly: false,
+    sameSite: "lax",
+  });
+});
+
+/**
+ * Read reveal prefs — tries `document.cookie` first to avoid an RPC round-trip.
+ * Falls back to `server$` during SSR (no `document`) or when the cookie is
+ * httpOnly / otherwise unreadable from the browser.
+ */
+export async function getRevealPrefsCookie(): Promise<RevealPrefs> {
+  if (isBrowser) {
+    const match = document.cookie.match(
+      new RegExp(`(?:^|;\\s*)${REVEAL_PREFS_COOKIE}=([^;]*)`),
+    );
+    if (match) return parseRevealPrefs(match[1]);
+    return getRevealPrefsCookieServer();
+  }
+  return getRevealPrefsCookieServer();
+}
+
+/**
+ * Write reveal prefs — uses `document.cookie` in the browser for an instant,
+ * synchronous write with no network cost. Only falls back to `server$` during
+ * SSR where `document` doesn't exist.
+ */
+export async function setRevealPrefsCookie(prefs: RevealPrefs): Promise<void> {
+  if (isBrowser) {
+    const encoded = encodeURIComponent(JSON.stringify(prefs));
+    document.cookie = `${REVEAL_PREFS_COOKIE}=${encoded};path=/;max-age=${COOKIE_MAX_AGE};samesite=lax`;
+    return;
+  }
+  await setRevealPrefsCookieServer(prefs);
 }
 
 export type HeroVariant = {

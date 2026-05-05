@@ -74,6 +74,11 @@ The landing page at `/` is the welcome thread. Every other thread lives under
 - `/examples/ab-testing/` — Multi-layer A/B testing. Four independent
   Suspense boundaries (hero, pricing, recommendations, CTA) resolve at
   different speeds so fast experiments never wait on slow ones.
+- `/examples/reveal-order/` — Reveal ordering. Wraps sibling Suspense
+  boundaries in `<Reveal>` to coordinate `parallel`, `sequential`,
+  `reverse`, and `together` reveal order, plus a nested group. The
+  selected order is persisted in a cookie so a refresh replays SSR with
+  that ordering from the very first paint.
 
 ## Project Structure
 
@@ -95,6 +100,7 @@ src/
       loading.tsx                  # shared Suspense fallback/loading UI
       local-search.tsx             # one example component
       manual-refresh.tsx           # one example component
+      reveal-order.tsx             # one example component
       stale-while-revalidate.tsx   # one example component
       tracked-profile.tsx          # one example component
   mocks/
@@ -110,6 +116,7 @@ src/
       stale-while-revalidate/index.tsx
       local-search/index.tsx
       ab-testing/index.tsx
+      reveal-order/index.tsx
 ```
 
 The route files stay small and import components. The example components own
