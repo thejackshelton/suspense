@@ -51,3 +51,8 @@ lerna-debug.log*
 /CLAUDE.md
 /CLAUDE.md.bak
 
+
+# START Ruler Generated Files
+/.codex/config.toml
+/.codex/config.toml.bak
+# END Ruler Generated Files

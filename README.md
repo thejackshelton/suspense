@@ -71,6 +71,9 @@ The landing page at `/` is the welcome thread. Every other thread lives under
 - `/examples/local-search/` — Local-first search with server enrichment.
   Filters a local product list instantly while `useAsync$` fetches enriched
   server results in the background.
+- `/examples/ab-testing/` — Multi-layer A/B testing. Four independent
+  Suspense boundaries (hero, pricing, recommendations, CTA) resolve at
+  different speeds so fast experiments never wait on slow ones.
 
 ## Project Structure
 
@@ -85,6 +88,7 @@ src/
       chat-composer.tsx    # decorative ChatGPT-style input at the bottom
       threads.ts           # thread metadata (title, subtitle, route)
     examples/
+      ab-testing.tsx               # one example component
       delayed-search.tsx           # one example component
       error-state.tsx              # one example component
       example-shell.tsx            # shared card and delay picker UI
@@ -105,6 +109,7 @@ src/
       error-state/index.tsx
       stale-while-revalidate/index.tsx
       local-search/index.tsx
+      ab-testing/index.tsx
 ```
 
 The route files stay small and import components. The example components own

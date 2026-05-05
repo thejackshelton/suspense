@@ -19,6 +19,7 @@ This is a Qwik v2 playground app demonstrating `useAsync$`, `server$`, and `<Sus
 - Use `useAsync$` for async state, not route loaders
 - Use `<Suspense>` to wrap UI that reads async `.value`
 - Path alias `~/` maps to `src/`
+- When adding, removing, or renaming examples, always update `README.md` (threads list, project structure tree, and route list)
 
 ## Project Structure
 

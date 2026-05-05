@@ -77,6 +77,15 @@ export const EXAMPLE_THREADS: ChatThreadMeta[] = [
     group: "Last 7 days",
     href: "/examples/local-search/",
   },
+  {
+    slug: "ab-testing",
+    title: "Personalize with A/B tests",
+    subtitle:
+      "Multiple independent Suspense boundaries let each experiment resolve at its own pace — no waterfall.",
+    timestamp: "Fri",
+    group: "Last 7 days",
+    href: "/examples/ab-testing/",
+  },
 ];
 
 export const ALL_THREADS: ChatThreadMeta[] = [HOME_THREAD, ...EXAMPLE_THREADS];
