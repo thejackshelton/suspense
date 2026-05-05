@@ -59,6 +59,15 @@ export const EXAMPLE_THREADS: ChatThreadMeta[] = [
     group: "Last 7 days",
     href: "/examples/error-state/",
   },
+  {
+    slug: "stale-while-revalidate",
+    title: "Refresh without flashing a fallback",
+    subtitle:
+      "Keep the previous .value visible while .loading is true, then swap in the new value.",
+    timestamp: "Sun",
+    group: "Last 7 days",
+    href: "/examples/stale-while-revalidate/",
+  },
 ];
 
 export const ALL_THREADS: ChatThreadMeta[] = [HOME_THREAD, ...EXAMPLE_THREADS];

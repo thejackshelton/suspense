@@ -20,6 +20,13 @@ export type Inventory = {
   checkedAt: string;
 };
 
+export type Metric = {
+  label: string;
+  value: number;
+  delayMs: number;
+  recordedAt: string;
+};
+
 type ReportResult =
   | {
       ok: true;
@@ -101,6 +108,21 @@ export const checkMockInventory = server$(
     } satisfies Inventory;
   },
 );
+
+export const getMockMetric = server$(async (label: string, delayMs: number) => {
+  await new Promise((resolve) => setTimeout(resolve, delayMs));
+
+  return {
+    label,
+    value: 800 + Math.floor(Math.random() * 400),
+    delayMs,
+    recordedAt: new Date().toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      second: "2-digit",
+    }),
+  } satisfies Metric;
+});
 
 export const getUnstableMockReport = server$(
   async (shouldFail: boolean, delayMs: number) => {
