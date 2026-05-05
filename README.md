@@ -17,8 +17,8 @@ Qwik v2 keeps async work close to the component that renders it. These examples
 use three APIs together:
 
 - `server$`: Defines server-only logic that can be called from component code.
-  The mock functions in `src/mocks/async-examples.ts` use delays so the loading
-  states are easy to see.
+  The mock functions under `src/mocks/` use delays so the loading states are
+  easy to see.
 - `useAsync$`: Creates an async signal. The callback can read tracked signals,
   call server functions, expose `.value`, report `.loading`, surface `.error`,
   and rerun through `.invalidate()`.
@@ -27,6 +27,50 @@ use three APIs together:
 
 The important pattern is that `useAsync$` owns the async value, and `<Suspense>`
 owns the pending UI around the part of the tree that reads that value.
+
+## Qwik for React devs
+
+If you're coming from React, here's a side-by-side concept map for everything
+you'll see in this repo. The short version: Qwik looks like JSX + hooks, but
+every `*$` suffix is a lazy-load boundary the optimizer can split out of the
+initial bundle.
+
+| React                                          | Qwik                                                   | Notes                                                                                  |
+| ---------------------------------------------- | ------------------------------------------------------ | -------------------------------------------------------------------------------------- |
+| `function MyComp() { … }`                      | `component$(() => …)`                                  | The `$` makes the component a lazy-loadable chunk.                                     |
+| `useState(0)`                                  | `useSignal(0)`                                         | Read & write via `.value`. No setter function.                                         |
+| `useEffect(() => …, [dep])`                    | `useTask$(({ track }) => { track(dep); … })`           | Runs on the **server** during SSR + on the client. Awaited before first render.        |
+| `useEffect(() => …, [])` (browser only)        | `useVisibleTask$(() => …)`                             | Runs only after the component is hydrated/visible in the browser.                      |
+| `useMemo(() => f(x), [x])`                     | `useComputed$(() => f(x.value))`                       | Auto-tracks signals you read inside.                                                   |
+| `props.children`                               | `<Slot />`                                             | Slots are placed by name; no `children` prop.                                          |
+| `onClick={(e) => …}`                           | `onClick$={(e) => …}`                                  | The `$` lets the optimizer ship the handler only when the event actually fires.        |
+| `clsx("a", cond && "b")`                       | `class={["a", cond && "b"]}`                           | Native — array classes are supported out of the box.                                   |
+| `<input value={x} onChange={e => set(e…)} />`  | `<input bind:value={signal} />`                        | Two-way bind to a signal, like Vue's `v-model`.                                        |
+| API route + `fetch`                            | `server$(async () => …)`                               | Call the server function from component code; the optimizer turns it into RPC.         |
+| React 18 `<Suspense>` (mostly client)          | `<Suspense fallback>`                                  | Same idea, also works during SSR streaming.                                            |
+| React Query / SWR / `useEffect`+`useState`     | `useAsync$`                                            | Exposes `.value`, `.loading`, `.error`, `.invalidate()`.                               |
+| `React.lazy` + `Suspense` for code-splitting   | The `$` suffix anywhere (`component$`, `onClick$`, …)  | Every `$` is a code-split point; you don't pick a few special ones.                    |
+
+A few patterns you'll see repeated in the examples:
+
+- `useAsync$(async ({ track, previous }) => { track(signal); return server$Fn(...); })`
+  is the workhorse. `track(signal)` says "rerun when this changes" (the React
+  equivalent of a `useEffect` dependency array, but expressed inline). `previous`
+  is the value from the last run — the examples use `previous ? delayMs : 0` to
+  skip the artificial delay on the very first render so SSR is fast.
+- `useTask$` is awaited before the first render commits. That's why the reveal
+  example reads its cookie inside `useTask$` — by the time the JSX commits, the
+  cookie value is already in the signal, so SSR streams the right state from
+  the very first byte.
+- Cookie persistence in this repo is wrapped in [`src/mocks/cookies.ts`](src/mocks/cookies.ts)
+  via a generic `createCookie<T>` factory. Both the A/B-testing segment and the
+  reveal-order preferences are built on it, so you only have to learn the
+  pattern once.
+
+**On resumability** — Qwik ships zero JS at boot. Functions you wrote with `$`
+are downloaded on demand when their event fires. That's why everything async
+in this repo is `*$` (`component$`, `useAsync$`, `onClick$`, `server$`, etc.):
+those `$` markers are the lazy-load boundaries.
 
 ## useAsync$ With Suspense
 
@@ -104,7 +148,16 @@ src/
       stale-while-revalidate.tsx   # one example component
       tracked-profile.tsx          # one example component
   mocks/
-    async-examples.ts      # mock server$ functions and shared types
+    async-examples.ts      # barrel re-export — keeps existing imports working
+    cookies.ts             # generic createCookie<T> factory (used by ab-testing + reveal)
+    profile.ts             # getMockProfile / Profile
+    docs.ts                # searchMockDocs / SearchResult
+    inventory.ts           # checkMockInventory / Inventory
+    metrics.ts             # getMockMetric / Metric
+    products.ts            # searchMockProducts / LOCAL_PRODUCTS / filterProducts
+    reports.ts             # getUnstableMockReport
+    ab-testing.ts          # segment cookie + 4 experiment server$ functions
+    reveal.ts              # getMockRevealItem + reveal-prefs cookie
   routes/
     layout.tsx             # mounts the chat shell around every route
     index.tsx              # welcome thread
