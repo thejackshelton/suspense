@@ -102,18 +102,22 @@ export const checkMockInventory = server$(
   },
 );
 
-export const getUnstableMockReport = server$(async (shouldFail: boolean) => {
-  await new Promise((resolve) => setTimeout(resolve, 1200));
+export const getUnstableMockReport = server$(
+  async (shouldFail: boolean, delayMs: number) => {
+    await new Promise((resolve) => setTimeout(resolve, delayMs));
 
-  if (shouldFail) {
+    const seconds = (delayMs / 1000).toFixed(1);
+
+    if (shouldFail) {
+      return {
+        ok: false,
+        message: `The mock report failed after ${seconds}s: planned API failure.`,
+      } satisfies ReportResult;
+    }
+
     return {
-      ok: false,
-      message: "The mock report failed after 1.2s: planned API failure.",
+      ok: true,
+      message: `The report finished after a ${seconds}s server delay.`,
     } satisfies ReportResult;
-  }
-
-  return {
-    ok: true,
-    message: "The report finished after a 1.2s server delay.",
-  } satisfies ReportResult;
-});
+  },
+);

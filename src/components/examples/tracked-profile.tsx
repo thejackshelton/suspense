@@ -8,11 +8,12 @@ import { InlineLoader, LoadingLabel } from "./loading";
 export const TrackedProfileExample = component$(() => {
   const name = useSignal("Ada");
   const delayMs = useSignal(900);
-  const profile = useAsync$(async ({ track }) => {
+  const profile = useAsync$(async ({ track, previous }) => {
     const selectedName = track(name);
     const selectedDelayMs = track(delayMs);
+    const delay = previous ? selectedDelayMs : 0;
 
-    return getMockProfile(selectedName, selectedDelayMs);
+    return getMockProfile(selectedName, delay);
   });
 
   return (

@@ -7,9 +7,10 @@ import { InlineLoader, ListFallback } from "./loading";
 
 export const ErrorStateExample = component$(() => {
   const shouldFail = useSignal(false);
-  const report = useAsync$(async ({ track }) => {
+  const report = useAsync$(async ({ track, previous }) => {
     const fail = track(shouldFail);
-    const result = await getUnstableMockReport(fail);
+    const delay = previous ? 1200 : 0;
+    const result = await getUnstableMockReport(fail, delay);
 
     if (!result.ok) {
       throw new Error(result.message);

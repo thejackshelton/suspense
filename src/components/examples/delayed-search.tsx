@@ -8,9 +8,10 @@ import { InlineLoader, ListFallback } from "./loading";
 export const DelayedSearchExample = component$(() => {
   const query = useSignal("");
   const delayMs = useSignal(700);
-  const results = useAsync$(async ({ track }) => {
+  const results = useAsync$(async ({ track, previous }) => {
     const search = track(query);
-    const delay = track(delayMs);
+    const selectedDelayMs = track(delayMs);
+    const delay = previous ? selectedDelayMs : 0;
 
     return searchMockDocs(search, delay);
   });

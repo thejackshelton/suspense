@@ -7,10 +7,11 @@ import { InlineLoader, ListFallback } from "./loading";
 
 export const ManualRefreshExample = component$(() => {
   const selectedItem = useSignal("Qwik mug");
-  const inventory = useAsync$<Inventory>(async ({ info }) => {
+  const inventory = useAsync$<Inventory>(async ({ info, previous }) => {
     const item = typeof info === "string" ? info : "Qwik mug";
+    const delay = previous ? 1000 : 0;
 
-    return checkMockInventory(item, 1000);
+    return checkMockInventory(item, delay);
   });
 
   return (
