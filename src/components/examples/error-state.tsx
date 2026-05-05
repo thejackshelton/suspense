@@ -22,7 +22,7 @@ export const ErrorStateExample = component$(() => {
   return (
     <ExampleShell>
       <button
-        class="w-fit rounded-md border border-rose-400 bg-rose-400 px-3 py-2 text-sm font-semibold text-slate-950 transition hover:bg-rose-300"
+        class="w-fit cursor-pointer rounded-md border border-rose-400 bg-rose-400 px-3 py-2 text-sm font-semibold text-slate-950 transition hover:bg-rose-300"
         onClick$={() => (shouldFail.value = !shouldFail.value)}
       >
         {shouldFail.value ? "Run successful report" : "Run failing report"}

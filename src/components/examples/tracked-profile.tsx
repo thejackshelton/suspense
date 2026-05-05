@@ -23,7 +23,7 @@ export const TrackedProfileExample = component$(() => {
           <button
             key={person}
             class={[
-              "rounded-md border px-3 py-2 text-sm font-medium transition",
+              "cursor-pointer rounded-md border px-3 py-2 text-sm font-medium transition",
               name.value === person
                 ? "border-cyan-300 bg-cyan-300 text-slate-950"
                 : "border-slate-700 bg-slate-900 text-slate-200 hover:border-slate-500",

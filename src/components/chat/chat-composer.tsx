@@ -29,7 +29,7 @@ export const ChatComposer = component$<ChatComposerProps>(
           />
           <button
             type="submit"
-            class="grid h-9 w-9 place-items-center rounded-lg bg-cyan-300 text-slate-950 transition hover:bg-cyan-200 disabled:cursor-not-allowed disabled:opacity-60"
+            class="grid h-9 w-9 cursor-pointer place-items-center rounded-lg bg-cyan-300 text-slate-950 transition hover:bg-cyan-200 disabled:cursor-not-allowed disabled:opacity-60"
             aria-label="Send"
             disabled
           >
