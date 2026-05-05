@@ -68,6 +68,15 @@ export const EXAMPLE_THREADS: ChatThreadMeta[] = [
     group: "Last 7 days",
     href: "/examples/stale-while-revalidate/",
   },
+  {
+    slug: "local-search",
+    title: "Search local and server data",
+    subtitle:
+      "Filter a local product list instantly while useAsync$ fetches enriched server results.",
+    timestamp: "Sat",
+    group: "Last 7 days",
+    href: "/examples/local-search/",
+  },
 ];
 
 export const ALL_THREADS: ChatThreadMeta[] = [HOME_THREAD, ...EXAMPLE_THREADS];

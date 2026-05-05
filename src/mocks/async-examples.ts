@@ -124,6 +124,58 @@ export const getMockMetric = server$(async (label: string, delayMs: number) => {
   } satisfies Metric;
 });
 
+export type LocalProduct = {
+  id: number;
+  name: string;
+  category: string;
+  price: number;
+};
+
+export type EnrichedProduct = LocalProduct & {
+  stock: number;
+  rating: number;
+  livePrice: number;
+  checkedAt: string;
+};
+
+export const LOCAL_PRODUCTS: LocalProduct[] = [
+  { id: 1, name: "Qwik Tee", category: "apparel", price: 29.99 },
+  { id: 2, name: "Resumable Hoodie", category: "apparel", price: 59.99 },
+  { id: 3, name: "Signal Stickers", category: "accessories", price: 4.99 },
+  { id: 4, name: "JSX Mug", category: "drinkware", price: 14.99 },
+  { id: 5, name: "Lazy-load Laptop Sleeve", category: "accessories", price: 24.99 },
+  { id: 6, name: "SSR Cap", category: "apparel", price: 19.99 },
+  { id: 7, name: "Hydration Bottle", category: "drinkware", price: 18.99 },
+  { id: 8, name: "Component Pin Set", category: "accessories", price: 9.99 },
+];
+
+export const searchMockProducts = server$(
+  async (query: string, delayMs: number) => {
+    await new Promise((resolve) => setTimeout(resolve, delayMs));
+
+    const normalizedQuery = query.trim().toLowerCase();
+    const filtered = normalizedQuery
+      ? LOCAL_PRODUCTS.filter(
+          (p) =>
+            p.name.toLowerCase().includes(normalizedQuery) ||
+            p.category.toLowerCase().includes(normalizedQuery),
+        )
+      : LOCAL_PRODUCTS;
+
+    return filtered.map((p) => ({
+      ...p,
+      stock: Math.floor(Math.random() * 50) + 1,
+      rating: +(3.5 + Math.random() * 1.5).toFixed(1),
+      livePrice: +(p.price * (0.85 + Math.random() * 0.3)).toFixed(2),
+      checkedAt: new Date().toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "2-digit",
+        second: "2-digit",
+      }),
+    })) satisfies EnrichedProduct[];
+  },
+);
+
 export const getUnstableMockReport = server$(
   async (shouldFail: boolean, delayMs: number) => {
     await new Promise((resolve) => setTimeout(resolve, delayMs));
