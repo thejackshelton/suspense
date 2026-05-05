@@ -1,3 +1,4 @@
+import { isBrowser } from "@qwik.dev/core";
 import { server$ } from "@qwik.dev/router";
 
 export type Profile = {
@@ -201,6 +202,59 @@ export const getUnstableMockReport = server$(
 // ---------------------------------------------------------------------------
 
 export type UserSegment = "new" | "returning" | "premium";
+
+const VALID_SEGMENTS: UserSegment[] = ["new", "returning", "premium"];
+
+const COOKIE_NAME = "ab-segment";
+const COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
+
+function parseSegment(raw: string | undefined | null): UserSegment {
+  if (VALID_SEGMENTS.includes(raw as UserSegment)) return raw as UserSegment;
+  return "new";
+}
+
+const getSegmentCookieServer = server$(function (): UserSegment {
+  return parseSegment(this.cookie.get(COOKIE_NAME)?.value);
+});
+
+const setSegmentCookieServer = server$(function (segment: UserSegment) {
+  this.cookie.set(COOKIE_NAME, segment, {
+    path: "/",
+    maxAge: COOKIE_MAX_AGE,
+    httpOnly: false,
+    sameSite: "lax",
+  });
+});
+
+/**
+ * Read segment — tries `document.cookie` first to avoid an RPC round-trip.
+ * Falls back to `server$` when running during SSR (no `document`) or when
+ * the cookie is httpOnly / otherwise unreadable from the browser.
+ */
+export async function getSegmentCookie(): Promise<UserSegment> {
+  if (isBrowser) {
+    const match = document.cookie.match(
+      new RegExp(`(?:^|;\\s*)${COOKIE_NAME}=([^;]*)`),
+    );
+    if (match) return parseSegment(decodeURIComponent(match[1]));
+    // Cookie not visible to JS (e.g. httpOnly) — ask the server
+    return getSegmentCookieServer();
+  }
+  return getSegmentCookieServer();
+}
+
+/**
+ * Write segment — uses `document.cookie` in the browser for an instant,
+ * synchronous write with no network cost. Only falls back to `server$`
+ * during SSR where `document` doesn't exist.
+ */
+export async function setSegmentCookie(segment: UserSegment): Promise<void> {
+  if (isBrowser) {
+    document.cookie = `${COOKIE_NAME}=${segment};path=/;max-age=${COOKIE_MAX_AGE};samesite=lax`;
+    return;
+  }
+  await setSegmentCookieServer(segment);
+}
 
 export type HeroVariant = {
   experimentId: string;

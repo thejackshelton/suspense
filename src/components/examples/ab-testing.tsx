@@ -1,10 +1,18 @@
-import { component$, Suspense, useAsync$, useSignal } from "@qwik.dev/core";
+import {
+  component$,
+  Suspense,
+  useAsync$,
+  useSignal,
+  useTask$,
+} from "@qwik.dev/core";
 
 import {
   getCTAExperiment,
   getHeroExperiment,
   getPricingPersonalization,
   getRecommendations,
+  getSegmentCookie,
+  setSegmentCookie,
   type CTAVariant,
   type HeroVariant,
   type PricingTier,
@@ -30,6 +38,11 @@ const SEGMENTS: { value: UserSegment; label: string }[] = [
  */
 export const ABTestingExample = component$(() => {
   const segment = useSignal<UserSegment>("new");
+
+  // Restore persisted segment from cookie (runs during SSR, no flash)
+  useTask$(async () => {
+    segment.value = await getSegmentCookie();
+  });
 
   const hero = useAsync$<HeroVariant>(async ({ track, previous }) => {
     const seg = track(segment);
@@ -67,14 +80,17 @@ export const ABTestingExample = component$(() => {
                   ? "border-cyan-300 bg-cyan-300 text-slate-950"
                   : "border-slate-700 bg-slate-900 text-slate-200 hover:border-slate-500",
               ]}
-              onClick$={() => (segment.value = s.value)}
+              onClick$={async () => {
+                segment.value = s.value;
+                await setSegmentCookie(s.value);
+              }}
             >
               {s.label}
             </button>
           ))}
         </div>
         <p class="text-xs text-slate-500">
-          Switch segments — each experiment resolves independently.
+          Switch segments — your choice is saved and remembered on reload.
         </p>
       </div>
 
